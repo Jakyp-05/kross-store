@@ -1,20 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import logoImage from "../../assets/svg/logo.svg";
 import basketImage from "../../assets/svg/basket.svg";
 import wishlistImage from "../../assets/svg/wishlist.svg";
 import profileImage from "../../assets/svg/profile.svg";
+import Cart from "../cart";
 
 const Navbar: React.FC = () => {
+  const [cartOpen, setCartOpen] = useState<boolean>(false);
+
+  const handleCartOpen = () => {
+    setCartOpen(true);
+  };
+
   return (
     <header className="flex items-center justify-between pb-[44px] border-b-[1px] border-border-color border-sold">
       <div className="flex items-center gap-x-[16px]">
         <Link to="/">
           <img src={logoImage} alt="Kross Store" loading="lazy" />
         </Link>
-        <div className="">
-          <h2 className="text-global-color text-xl font-bold uppercase">
+        <div>
+          <h2 className="text-black text-xl font-bold uppercase">
             Kross Store
           </h2>
           <p className="text-second-color text-sm font-normal">
@@ -23,7 +30,10 @@ const Navbar: React.FC = () => {
         </div>
       </div>
       <ul className="flex items-center gap-x-[32px]">
-        <li className="flex items-center gap-x-[10px]">
+        <li
+          onClick={handleCartOpen}
+          className="flex items-center gap-x-[10px] cursor-pointer"
+        >
           <img src={basketImage} alt="basket image" loading="lazy" />
           <span className="text-second-color">{0}</span>
         </li>
@@ -36,6 +46,7 @@ const Navbar: React.FC = () => {
           <span className="text-second-color">Профиль</span>
         </li>
       </ul>
+      {cartOpen && <Cart close={() => setCartOpen(false)} />}
     </header>
   );
 };
