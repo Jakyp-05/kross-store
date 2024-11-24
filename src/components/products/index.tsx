@@ -11,7 +11,8 @@ const Products: React.FC = () => {
     dispatch(getAllProductsAction());
   }, [dispatch]);
 
-  console.log("Продукты из Redux:", products);
+  if (status === "loading") return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <section className="mt-[40px] flex flex-wrap item-center gap-[36px]">

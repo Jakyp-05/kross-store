@@ -6,9 +6,11 @@ import basketImage from "../../assets/svg/basket.svg";
 import wishlistImage from "../../assets/svg/wishlist.svg";
 import profileImage from "../../assets/svg/profile.svg";
 import Cart from "../cart";
+import { useAppSelector } from "../../redux/store";
 
 const Navbar: React.FC = () => {
   const [cartOpen, setCartOpen] = useState<boolean>(false);
+  const { cart } = useAppSelector((state) => state.cart);
 
   const handleCartOpen = () => {
     setCartOpen(true);
@@ -35,7 +37,7 @@ const Navbar: React.FC = () => {
           className="flex items-center gap-x-[10px] cursor-pointer"
         >
           <img src={basketImage} alt="basket image" loading="lazy" />
-          <span className="text-second-color">{0}</span>
+          <span className="text-second-color">{cart ? cart.length : 0}</span>
         </li>
         <li className="flex items-center gap-x-[10px]">
           <img src={wishlistImage} alt="wishlist image" loading="lazy" />

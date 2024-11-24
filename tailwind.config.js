@@ -13,6 +13,9 @@ export default {
         "wish-list-color": "#F8F8F8",
         green: "#9DD458",
       },
+      backgroundImage: {
+        "button-gradient": "linear-gradient(#89F09C, #3CC755)",
+      },
     },
   },
   plugins: [],
