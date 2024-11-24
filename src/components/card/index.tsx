@@ -13,14 +13,12 @@ type IProps = {
 
 const Card: React.FC<IProps> = ({ product }) => {
   const dispatch = useAppDispatch();
-  const cartItems = useAppSelector(selectCartItems); // Используем селектор для получения товаров в корзине
+  const cartItems = useAppSelector(selectCartItems);
 
-  // Проверяем, есть ли товар в корзине
   const isInCart = cartItems.some((item) => item.id === product.id);
 
   const handleCart = (product: Products) => {
     dispatch(addToCart(product));
-    console.log(product);
   };
 
   return (

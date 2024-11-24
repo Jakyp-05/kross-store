@@ -1,20 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import logoImage from "../../assets/svg/logo.svg";
 import basketImage from "../../assets/svg/basket.svg";
 import wishlistImage from "../../assets/svg/wishlist.svg";
 import profileImage from "../../assets/svg/profile.svg";
+import useNavbar from "../../hooks/useNavbar";
+
 import Cart from "../cart";
-import { useAppSelector } from "../../redux/store";
 
 const Navbar: React.FC = () => {
-  const [cartOpen, setCartOpen] = useState<boolean>(false);
-  const { cart } = useAppSelector((state) => state.cart);
-
-  const handleCartOpen = () => {
-    setCartOpen(true);
-  };
+  const { cartOpen, cart, handleCartOpen, setCartOpen } = useNavbar();
 
   return (
     <header className="flex items-center justify-between pb-[44px] border-b-[1px] border-border-color border-sold">

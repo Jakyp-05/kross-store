@@ -1,44 +1,22 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import boxImage from "../../assets/images/box.png";
 import cartVector from "../../assets/svg/cart-vector.svg";
 import closeImage from "../../assets/svg/close.svg";
 import cartRight from "../../assets/svg/cart-right.svg";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { fetchCartAction } from "../../redux/addToCart/action";
-import { useParams } from "react-router-dom";
-import { removeCart } from "../../redux/addToCart/slice";
-import { Products } from "../../api/types/productsTypes";
-import useOutSideClick from "../../hooks/useOutSideClick";
+import useCart from "../../hooks/useCart";
 
 type IProps = {
   close: () => void;
 };
 
 const Cart: React.FC<IProps> = ({ close }) => {
-  const { cartId } = useParams();
-  const dispatch = useAppDispatch();
-  const { cart, status, error } = useAppSelector((state) => state.cart);
+  const { cart, status, error, total, tax, handleRemove, ref } = useCart({
+    close,
+  });
 
   if (status === "loading") return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
-  const tax = Math.round(total * 0.05);
-
-  const handleRemove = (product: Products) => {
-    dispatch(removeCart(product));
-  };
-
-  const ref = useOutSideClick<HTMLDivElement>(() => {
-    close();
-  });
-
-  useEffect(() => {
-    if (cartId) {
-      dispatch(fetchCartAction(Number(cartId)));
-    }
-  }, [cartId, dispatch]);
 
   return (
     <section className="overflow-hidden fixed top-0 right-0 w-full h-full z-30 bg-black bg-opacity-50">

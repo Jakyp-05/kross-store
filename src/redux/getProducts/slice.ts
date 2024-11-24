@@ -7,12 +7,21 @@ const initialState: productsState = {
   products: [],
   status: "idle",
   error: null,
+  filteredProducts: [],
+  searchQuery: "",
 };
 
 const productsClice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.searchQuery = action.payload;
+      state.filteredProducts = state.products.filter((product) =>
+        product.name.toLowerCase().includes(action.payload.toLowerCase())
+      );
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllProductsAction.pending, (state) => {
@@ -23,6 +32,9 @@ const productsClice = createSlice({
         (state, action: PayloadAction<Products[]>) => {
           state.status = "succeeded";
           state.products = action.payload;
+          state.filteredProducts = action.payload.filter((product) =>
+            product.name.toLowerCase().includes(state.searchQuery.toLowerCase())
+          );
         }
       )
       .addCase(getAllProductsAction.rejected, (state, action) => {
@@ -32,4 +44,5 @@ const productsClice = createSlice({
   },
 });
 
+export const { setSearchQuery } = productsClice.actions;
 export default productsClice.reducer;
